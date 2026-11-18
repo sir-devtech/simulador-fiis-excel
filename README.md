@@ -6,7 +6,7 @@ Arquivo: `planilha/caderno-fii.xlsx`
 
 ## O que ela responde
 
-Na aba **Caderno**, bloco **As cinco perguntas**:
+Na aba **Caderno**, bloco verde **Investimento mensal**:
 
 1. Quanto investir por mês: célula azul do aporte. No exemplo, R$ 200.
 2. Por quantos anos: no exemplo, 10.
