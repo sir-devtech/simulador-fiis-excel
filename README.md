@@ -1,82 +1,52 @@
 # Caderno do aporte
 
-Planilha de estudo para simular aporte em fundo imobiliário. Abre no Excel ou no LibreOffice. Os valores são exemplo: salário de R$ 2.000, não é o meu.
+A conta da aula é direta. O salário de exemplo é R$ 2.000, então 30% daria R$ 600 por mês. Só que eu não consigo investir 600. Consigo investir 200. A planilha existe pra mostrar essa diferença, sem eu ficar refazendo conta na mão.
 
-Arquivo: `planilha/caderno-fii.xlsx`
+Arquivo: `planilha/caderno-fii.xlsx`. Abre no Excel e no LibreOffice. O salário não é o meu.
 
-## O que ela responde
+## Onde está cada resposta
 
-Na aba **Caderno**, bloco verde **Investimento mensal**:
+Tudo na aba **Caderno**. Célula branca eu digito. Célula cinza a planilha calcula.
 
-1. Quanto investir por mês: célula azul do aporte. No exemplo, R$ 200.
-2. Por quantos anos: no exemplo, 10.
-3. Taxa de rendimento mensal: no exemplo, 1,08%.
-4. Patrimônio acumulado: R$ 48.691,53.
-5. Dividendos mensais: R$ 292,15.
+No bloco verde, **Investimento mensal**, ficam as cinco perguntas:
 
-Embaixo eu separei o patrimônio em duas partes. Principal aportado é o que entrou de fato, R$ 24.000 (200 vezes 120 meses). Juros acumulados é o resto, R$ 24.691,53. Assim dá para ver o que a taxa acrescentou, em vez de olhar só o número final.
+- quanto por mês: R$ 200
+- por quantos anos: 10
+- taxa ao mês: 1,08%
+- patrimônio: R$ 48.691,53
+- dividendo no mês: R$ 292,15
 
-O bloco **Cenários** repete a conta para 2, 5, 10, 20 e 30 anos. A coluna da direita usa a sugestão de 30% do salário (R$ 600) com a mesma taxa, para comparar com o aporte de R$ 200.
+Embaixo eu abri o patrimônio em duas linhas, porque o número sozinho engana. Entrou de fato R$ 24.000 (200 vezes 120 meses). O resto, R$ 24.691,53, é juro. A taxa nominal, sem inflação.
 
-O bloco **Divisão por perfil** reparte o aporte do mês entre seis tipos de FII. Trocar o perfil na lista muda os percentuais. A célula **Conferência** fica `fecha` quando a soma do perfil dá 100% e a soma dos valores dá o aporte.
+O bloco **Cenários** repete isso em 2, 5, 10, 20 e 30 anos. Do lado tem a mesma conta com os R$ 600. Aí fica visível o que eu deixo na mesa quando aporto 200 em vez da sugestão.
 
-## VF
+O bloco amarelo **Divisão por perfil** reparte esses 200 entre seis tipos de FII. Troco o perfil na lista e a divisão muda. Se a soma não der 100%, ou o valor não bater com o aporte, a conferência marca `quebra`. No exemplo, marca `fecha`.
 
-O patrimônio usa `VF`. No arquivo a fórmula está em inglês, `FV`, que é o mesmo nome que o Excel guarda por dentro. No LibreOffice em português ela aparece como `VF`.
+## Como a conta foi feita
 
-Os argumentos, neste caso:
+O patrimônio é a função `VF`. No arquivo ela está salva como `FV`, que é o nome interno do Excel. No LibreOffice em português aparece `VF`. Eu passei a taxa mensal, os anos vezes 12, e o aporte negativo. Sem valor presente. O dividendo não entra nessa fórmula: é o patrimônio vezes o rendimento da carteira, 0,60% no exemplo.
 
-- taxa: `taxa_mensal` (1,08% no exemplo)
-- número de períodos: anos vezes 12
-- pagamento: o aporte com sinal negativo, senão o resultado sai negativo
+Pra não perder a taxa quando eu arrasto o cenário pros outros anos, troquei a célula por nome: `salario`, `rendimento_carteira`, `sugestao_investimento`, `aporte`, `qtd_anos`, `taxa_mensal` e `patrimonio`. O nome fica preso na célula. Arrastar não leva ele junto.
 
-Não tem valor presente e não tem inflação. A taxa é nominal ao mês. O dividendo não entra nessa conta: ele é o patrimônio vezes `rendimento_carteira` (0,60% no exemplo).
+A divisão usa `PROCV` na aba **alocacao**. Cada linha é um par perfil e tipo, com uma chave tipo `Moderado-TIJOLO`. A tela monta a mesma chave e busca o percentual. O último argumento é falso, pra casar a chave inteira.
 
-## PROCV
+A régua eu montei, não copiei a do Felipão, e não é recomendação. Fui do mais previsível pro mais cíclico.
 
-A aba **alocacao** tem uma linha para cada par perfil + tipo. A coluna chave junta os dois com hífen, por exemplo `Moderado-TIJOLO`.
+Conservador fica em papel 45%, tijolo 35%, híbridos 10%, FOFs 10%. Desenvolvimento e hotelaria ficam zerados.
 
-Na tela, o `PROCV` monta a mesma chave (`perfil` + hífen + tipo da linha) e busca na tabela. O quarto argumento é o percentual. Falso no final, para casar a chave inteira e não um pedaço.
+Moderado abre um pouco: papel 25%, tijolo 30%, híbridos 15%, FOFs 10%, desenvolvimento 12%, hotelaria 8%.
 
-## Intervalos nomeados
+Agressivo joga o peso no fim: papel 10%, tijolo 15%, híbridos 10%, FOFs 10%, desenvolvimento 30%, hotelaria 25%.
 
-- `salario`
-- `rendimento_carteira`
-- `sugestao_investimento` (salário vezes 30%)
-- `aporte`
-- `qtd_anos`
-- `taxa_mensal`
-- `patrimonio`
+Os três fecham em 100%.
 
-Os cenários usam esses nomes. Como o nome aponta para uma célula fixa, arrastar a fórmula para os outros anos não perde a taxa nem o aporte.
+## O que eu mudei na planilha da aula
 
-## Percentuais
-
-Eu montei a régua. Não copiei a do Felipão e não é recomendação de investimento.
-
-A ordem é do mais previsível para o mais cíclico: papel, tijolo, híbridos, FOFs, desenvolvimento, hotelaria.
-
-| Perfil | Papel | Tijolo | Híbridos | FOFs | Desenvolvimento | Hotelaria |
-| --- | --- | --- | --- | --- | --- | --- |
-| Conservador | 45% | 35% | 10% | 10% | 0% | 0% |
-| Moderado | 25% | 30% | 15% | 10% | 12% | 8% |
-| Agressivo | 10% | 15% | 10% | 10% | 30% | 25% |
-
-Cada um soma 100%. Conservador fica em papel e tijolo. Agressivo joga o peso em desenvolvimento e hotelaria.
-
-## O que mudou na ferramenta do Expert
-
-A tela responde as mesmas perguntas, com salário, taxa e aporte de exemplo parecidos com os da aula. Mudei o resto:
-
-- nome da ferramenta, Caderno do aporte
-- a conta mostra principal e juros, não só o patrimônio
-- os cenários têm uma segunda coluna com os 30% do salário
-- a tabela de percentuais é outra
-- tem conferência: se o perfil não fechar em 100%, ou se o valor não bater com o aporte, a célula marca `quebra`
+A tela responde as mesmas perguntas e o exemplo é o da aula (200 por mês, 10 anos, 1,08%). O resto eu fiz do meu jeito: o nome é Caderno do aporte, aparece principal e juro, os cenários comparam 200 com 600, a tabela de percentual é outra, e tem a célula de conferência.
 
 ## Prints
 
-Mesma simulação (R$ 200 por mês, 10 anos, 1,08% ao mês) em dois perfis.
+A mesma simulação, só muda o perfil.
 
 ![Moderado](docs/prints/perfil-moderado.png)
 
